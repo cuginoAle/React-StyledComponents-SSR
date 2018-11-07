@@ -11,7 +11,7 @@ Install dependencies with
 Run dev mode with
 ```npm run dev```
 
-Now open the browser and navigate to `http://localhost:2048` and you get your server rendered React app. You can inspect the page source and see that the html coming from your local server has all the nodes defined in the React app.
+Now open the browser and navigate to `http://localhost:3000` and you get your server rendered React app. You can inspect the page source and see that the html coming from your local server has all the nodes defined in the React app.
 
 ### A few notes
 * We're starting the server with the `index.js` file which is in the root folder. This file loads the babel-register and sets up the babel plugins needed to run JSX and ESModules on the server.

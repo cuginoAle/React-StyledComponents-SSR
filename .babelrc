@@ -10,10 +10,19 @@
       "jest"
   ],
   "env": {
-      "test": {
+      "dev": {
           "presets": ["react"],
-          "plugins": ["transform-es2015-modules-commonjs"]
-      }
-
+          "plugins": [
+              "babel-plugin-styled-components",
+              "transform-es2015-modules-commonjs"
+            ]
+      },
+      "production": {
+        "presets": ["react"],
+        "plugins": [
+            "babel-plugin-styled-components",
+            "transform-es2015-modules-commonjs"
+          ]
+    }
   }
 }
