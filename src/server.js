@@ -37,6 +37,7 @@ function htmlTemplate (reactDom, styleTags) {
     <head>
       <meta charset="utf-8">
       <title>React SSR!</title>
+      <link href="assets/base.css" rel="stylesheet" type="text/css"></link>
       ${styleTags}
     </head>
     
