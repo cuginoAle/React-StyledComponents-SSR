@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link, Switch, Route } from 'react-router-dom'
-import Home from './pages/Home.jsx'
-import About from './pages/About.jsx'
-import Contact from './pages/Contact.jsx'
+import routes from './routes'
 
 export default (props) => {
   return (
@@ -14,9 +12,9 @@ export default (props) => {
         <Link to='/contact'>Contact</Link>
       </div>
       <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/about' exact component={About} />
-        <Route path='/contact' exact component={Contact} />
+        { routes.map(({ path, exact, component: Component }) => {
+          return <Route key={path} path={path} exact={exact} render={() => <Component data={props.data} />} />
+        }) }
       </Switch>
     </div>
   )
