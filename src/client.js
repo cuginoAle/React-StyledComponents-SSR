@@ -4,11 +4,15 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import AppWrapper from './app.jsx'
 
-const jsx = (
-  <Router>
-    <AppWrapper />
-  </Router>
-)
+const Jsx = (props) => {
+  const routeData = window.__ROUTE_DATA__
+
+  return (
+    <Router>
+      <AppWrapper clientData={routeData} />
+    </Router>
+  )
+}
 
 const app = document.getElementById('app')
-ReactDOM.hydrate(jsx, app)
+ReactDOM.hydrate(<Jsx />, app)

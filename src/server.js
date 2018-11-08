@@ -14,7 +14,7 @@ const sheet = new ServerStyleSheet()
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 app.get('/*', (req, res) => {
-  const context = {}
+  // const context = {}
 
   const route = routes.filter(route => matchPath(req.url, route)) // filter matching paths
 
@@ -28,9 +28,9 @@ app.get('/*', (req, res) => {
 
   Promise.all(dataRequirements).then((data) => {
     const jsx = (
-      <StaticRouter context={context} location={req.url}>
+      <StaticRouter context={{ fetched: data }} location={req.url}>
         <StyleSheetManager sheet={sheet.instance}>
-          <AppWrapper data={data} />
+          <AppWrapper />
         </StyleSheetManager>
       </StaticRouter>
     )
@@ -39,13 +39,13 @@ app.get('/*', (req, res) => {
     const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
 
     res.writeHead(200, { 'Content-Type': 'text/html' })
-    res.end(htmlTemplate(reactDom, styleTags))
+    res.end(htmlTemplate(reactDom, styleTags, data))
   })
 })
 
 app.listen(3000)
 
-function htmlTemplate (reactDom, styleTags) {
+function htmlTemplate (reactDom, styleTags, routeData) {
   return `
     <!DOCTYPE html>
     <html>
@@ -58,6 +58,14 @@ function htmlTemplate (reactDom, styleTags) {
     
     <body>
       <div id="app">${reactDom}</div>
+      <script>
+      // WARNING: See the following for security issues around embedding JSON in HTML:
+      // http://redux.js.org/recipes/ServerRendering.html#security-considerations
+      window.__ROUTE_DATA__ = ${JSON.stringify(routeData).replace(
+    /</g,
+    '\\u003c'
+  )}
+      </script>      
       <script src="./app.bundle.js"></script>
     </body>
     </html>

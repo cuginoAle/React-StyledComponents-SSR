@@ -16,25 +16,37 @@ class Home extends Component {
   constructor (props) {
     super(props)
 
-    console.log(props);
-    
-
     this.state = {
-      circuits: []
+      circuits: undefined
     }
 
-    if (props.data) {
-      const data = props.data.find(item => {
+    console.log(props.clientData)
+
+    if (props.staticContext && props.staticContext.fetched) {
+      const data = props.staticContext.fetched.find(item => {
         return item.Home
       })
+
       this.state = {
         circuits: data.Home || []
       }
     }
-    console.log(this.state.circuits);
-    
+
+    if (props.clientData) {
+      const data = props.clientData.find(item => {
+        return item.Home
+      })
+
+      this.state = {
+        circuits: (data && data.Home) || undefined
+      }
+    }
 
     if (!this.state.circuits) {
+      this.state = {
+        circuits: []
+      }
+
       fetchCircuits().then(data => {
         this.setState({
           circuits: data
@@ -42,6 +54,7 @@ class Home extends Component {
       })
     }
   }
+
   render () {
     return (
       <Wrapper>
