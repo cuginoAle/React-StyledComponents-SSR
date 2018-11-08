@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Layout from '../layouts/one_col.jsx'
 import s from 'styled-components'
 import { fetchCircuits } from '../api'
+
+import About from './About.jsx'
 const Wrapper = s(Layout)`
   .title {
     font-size: 20px;
@@ -19,20 +21,17 @@ class Home extends Component {
     this.state = {
       circuits: undefined
     }
-
-    console.log(props.clientData)
-
-    if (props.staticContext && props.staticContext.fetched) {
+    if (props && props.staticContext && props.staticContext.fetched) {
       const data = props.staticContext.fetched.find(item => {
         return item.Home
       })
 
       this.state = {
-        circuits: data.Home || []
+        circuits: (data && data.Home) || []
       }
     }
 
-    if (props.clientData) {
+    if (props && props.clientData) {
       const data = props.clientData.find(item => {
         return item.Home
       })
@@ -64,6 +63,8 @@ class Home extends Component {
         {this.state.circuits.map(data => {
           return <p key={data.circuitId}>{data.circuitName}</p>
         })}
+
+        <About {...this.props} />
       </Wrapper>
     )
   }

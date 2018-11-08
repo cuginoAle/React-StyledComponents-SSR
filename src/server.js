@@ -18,13 +18,15 @@ app.get('/*', (req, res) => {
 
   const route = routes.filter(route => matchPath(req.url, route)) // filter matching paths
 
-  const dataRequirements = route.map(route => route.component) // map to components
-    .filter(comp => comp.dataFetch) // check if components have data requirement
-    .map(comp => comp.dataFetch().then(data => {
-      return {
-        [comp.name]: data
-      }
-    })) // dispatch data requirement
+  const components = route.map(route => route.component) // map to components
+  const componentsNeedingData = getComponentsWithDataFetch(components[0])
+
+  // check if components have data requirement
+  const dataRequirements = componentsNeedingData.map(comp => comp.dataFetch().then(data => {
+    return {
+      [comp.name]: data
+    }
+  })) // dispatch data requirement
 
   Promise.all(dataRequirements).then((data) => {
     const jsx = (
@@ -70,4 +72,42 @@ function htmlTemplate (reactDom, styleTags, routeData) {
     </body>
     </html>
   `
+}
+
+function getComponentsWithDataFetch (C) {
+  let needsData = []
+
+  if (C && C.dataFetch) {
+    console.log('adding ', C.name)
+    needsData.push(C)
+  }
+
+  if (C) {
+    try {
+      var A = new C().render()
+      needsData = needsData.concat(getChildrenWithDataFetch(A))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return needsData
+}
+
+function getChildrenWithDataFetch (C) {
+  let needsData = []
+
+  try {
+    C.props.children.forEach(Item => {
+      if (Item.type && Item.type.dataFetch) {
+        needsData.push(Item.type)
+      }
+
+      needsData = needsData.concat(getChildrenWithDataFetch(Item))
+    })
+  } catch (error) {
+    console.error(error)
+  }
+
+  return needsData
 }
