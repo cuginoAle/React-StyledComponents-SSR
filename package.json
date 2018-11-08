@@ -8,7 +8,7 @@
     "dev": "webpack --watch --progress & nodemon index.js",
     "linter": "eslint src",
     "bundlesize": "bundlesize",
-    "precommit": "standard --fix"
+    "precommit": "standard"
   },
   "standard": {
     "parser": "babel-eslint"

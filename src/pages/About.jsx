@@ -36,7 +36,7 @@ class About extends Component {
       const self = this
       fetchCircuits().then(data => {
         console.log(data)
-        
+
         self.setState({
           circuits: data
         })
