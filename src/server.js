@@ -14,8 +14,6 @@ const sheet = new ServerStyleSheet()
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 app.get('/*', (req, res) => {
-  // const context = {}
-
   const route = routes.filter(route => matchPath(req.url, route)) // filter matching paths
 
   const dataRequirements = route.map(route => route.component) // map to components

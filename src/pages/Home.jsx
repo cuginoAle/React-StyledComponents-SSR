@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Layout from '../layouts/one_col.jsx'
 import s from 'styled-components'
-import { fetchCircuits } from '../api'
+import { fetchContent } from '../api'
 const Wrapper = s(Layout)`
   .title {
     font-size: 20px;
@@ -17,40 +17,40 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      circuits: undefined
+      categorie: undefined,
+      articoli: undefined
     }
-
-    console.log(props.clientData)
 
     if (props.staticContext && props.staticContext.fetched) {
       const data = props.staticContext.fetched.find(item => {
-        return item.Home
+        return item['Home']
       })
-
-      this.state = {
-        circuits: data.Home || []
-      }
+      this.state = processData(data['Home'])
     }
 
     if (props.clientData) {
       const data = props.clientData.find(item => {
         return item.Home
       })
-
-      this.state = {
-        circuits: (data && data.Home) || undefined
+      if (data) {
+        console.table(data.Home)
+        this.state = processData(data['Home'])
+      } else {
+        this.state = {
+          categorie: undefined,
+          articoli: undefined
+        }
       }
     }
 
-    if (!this.state.circuits) {
+    if (!this.state.categorie) {
       this.state = {
-        circuits: []
+        categorie: [],
+        articoli: []
       }
 
-      fetchCircuits().then(data => {
-        this.setState({
-          circuits: data
-        })
+      fetchContent('articolo').then((data) => {
+        this.setState(processData(data))
       })
     }
   }
@@ -61,14 +61,45 @@ class Home extends Component {
         <p className='title'>Pizza Pi</p>
         <h3>Hello world</h3>
         <img src='assets/images/1.jpg' />
-        {this.state.circuits.map(data => {
-          return <p key={data.circuitId}>{data.circuitName}</p>
+        {this.state.articoli.map(data => {
+          return (
+            <p key={data.id}>
+              <img src={data.immagine[0].fields.file.url} alt={data.immagine[0].fields.title} />
+              {data.titolo} = {data.descrizione}
+            </p>
+          )
         })}
       </Wrapper>
     )
   }
 }
 
-Home.dataFetch = fetchCircuits
+// this is needed for SSR
+Home.dataFetch = () => { return fetchContent('articolo') }
+
+function processData (data) {
+  const articoli = []
+  const categorie = []
+
+  data && data.items.forEach(element => {
+    const articolo = {
+      id: element.sys.id,
+      ...element.fields
+    }
+    articolo.immagine = articolo.immagine.map(artImg => {
+      return data.includes.Asset.find(img => img.sys.id === artImg.sys.id)
+    })
+
+    const categoria = data.includes.Entry.find(cat => cat.sys.id === articolo.categoria.sys.id)
+
+    articoli.push(articolo)
+    categorie.push(categoria)
+  })
+
+  return {
+    articoli,
+    categorie
+  }
+}
 
 export default Home

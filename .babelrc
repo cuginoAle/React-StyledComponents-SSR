@@ -7,22 +7,7 @@
           }
       ],
       "react",
-      "jest"
-  ],
-  "env": {
-      "dev": {
-          "presets": ["react"],
-          "plugins": [
-              "babel-plugin-styled-components",
-              "transform-es2015-modules-commonjs"
-            ]
-      },
-      "production": {
-        "presets": ["react"],
-        "plugins": [
-            "babel-plugin-styled-components",
-            "transform-es2015-modules-commonjs"
-          ]
-    }
-  }
+      "jest",
+      "stage-2"
+  ]
 }

@@ -1,15 +1,19 @@
 import React from 'react'
-import { Link, Switch, Route } from 'react-router-dom'
+import 'babel-polyfill'
+import {
+  // Link,
+  Switch,
+  Route } from 'react-router-dom'
 import routes from './routes'
 
 export default (props) => {
   return (
     <div>
-      <div>
+      {/* <div>
         <Link to='/'>Home</Link>
         <Link to='/about'>About</Link>
         <Link to='/contact'>Contact</Link>
-      </div>
+      </div> */}
       <Switch>
         { routes.map((routeProp) => {
           const Component = routeProp.component

@@ -1,8 +1,10 @@
 import React from 'react'
-import s from 'styled-components'
+import styled from 'styled-components'
 
-const Div = s.div`
-  border:1px dotted red;
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  
 `
 const OneCol = (props) => (
   <Div className={`${props.className} one_col`}>
