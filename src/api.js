@@ -83,8 +83,9 @@ async function fetchHomeContent () {
 
   return {
     categorie,
-    gallery: gallery.items.map(g => {
-      const img = gallery.includes.Asset.find(i => i.sys.id === g.fields.hero.sys.id)
+    gallery: gallery.items[0].fields.image.map(g => {
+      const hero = gallery.includes.Entry.find(i => i.sys.id === g.sys.id)
+      const img = gallery.includes.Asset.find(i => i.sys.id === hero.fields.image.sys.id)
       return {
         id: img.sys.id,
         ...img.fields

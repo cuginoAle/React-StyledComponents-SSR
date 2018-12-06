@@ -59,7 +59,7 @@ export default class ArticlesList extends PureComponent {
     return data.map(d => {
       return (
         <div key={d.id} className='catWrapper' >
-          <a name={d.id} className='catAnchor' />
+          <a id={`_${d.id}`} className='catAnchor' />
           <h2>{d.categoria}</h2>
           <div className='categoryContent'>
             {d.articoli.map(a => (<Article key={a.id} data={a} />))}

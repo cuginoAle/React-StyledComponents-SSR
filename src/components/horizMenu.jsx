@@ -14,7 +14,6 @@ const _HorizMenu = styled.div`
     box-shadow: -10px 0px 30px #000;
   }
 
-  }
   .scrollable {
     display: flex;
     align-items: center;
@@ -32,6 +31,11 @@ const _HorizMenu = styled.div`
 _HorizMenu.displayName = 'HorizMenu'
 
 export default class HorizMenu extends PureComponent {
+  scrollTo (e) {
+    e.preventDefault()
+
+    document.querySelector(`${e.target.hash}`).scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
   render () {
     const classes = ['horizMenu']
     this.props.className && classes.push(this.props.className)
@@ -39,7 +43,7 @@ export default class HorizMenu extends PureComponent {
     return (
       <_HorizMenu className={classes.join(' ')}>
         <div className='scrollable'>
-          {this.props.links.map(l => <a key={l.id} href={`#${l.id}`}>{l.label}</a>)}
+          {this.props.links.map(l => <a key={l.id} onClick={this.scrollTo} href={`#_${l.id}`}>{l.label}</a>)}
         </div>
       </_HorizMenu>
     )
