@@ -7,6 +7,7 @@ import HorizMenu from '../components/horizMenu.jsx'
 import ArticlesList from '../components/articlesList.jsx'
 import MobilePhone from '../components/mobilePhone.jsx'
 import HeroGallery from '../components/heroGallery.jsx'
+import SimpleList from '../components/simpleList.jsx'
 
 const Wrapper = styled(Layout)`
   .MobilePhone {
@@ -115,7 +116,8 @@ const Wrapper = styled(Layout)`
     }
   }
 
-  .articlesList{
+  .articlesList,
+  .SimpleList{
     @media screen and (min-width: 800px){
       width: 80%;
       margin: 0 auto;      
@@ -211,6 +213,7 @@ class Home extends Component {
         </SectionBar>
 
         <div className='articles'>
+          <SimpleList data={this.state} />
           <ArticlesList data={this.state} />
         </div>
 
