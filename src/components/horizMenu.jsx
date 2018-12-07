@@ -27,6 +27,7 @@ const _HorizMenu = styled.div`
     align-items: center;
     overflow: auto;
   }
+
   a {
     margin-right:1em;
     color: inherit;

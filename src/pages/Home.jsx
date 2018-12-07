@@ -113,6 +113,9 @@ const Wrapper = styled(Layout)`
     padding: 0px 10%;
     a {
       padding: 1em .5em;
+      &:last-child {
+        padding-right: 2em;
+      }      
     }
   }
 
