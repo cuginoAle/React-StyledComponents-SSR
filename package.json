@@ -8,7 +8,8 @@
     "dev": "webpack --watch --progress & nodemon index.js",
     "linter": "eslint src",
     "bundlesize": "bundlesize",
-    "precommit": "standard --fix"
+    "precommit": "standard --fix",
+    "publish": "npm run build && rsync -avzhe ssh ../pizzapi/ alessio@51.75.170.102:/etc/santapi/"
   },
   "standard": {
     "parser": "babel-eslint"

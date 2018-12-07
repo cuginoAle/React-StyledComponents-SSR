@@ -124,6 +124,10 @@ const Wrapper = styled(Layout)`
     }
   }
 
+  .SimpleList {
+    margin-bottom: 20px;
+  }
+
   .articles{
     margin-bottom: 100px;
   }

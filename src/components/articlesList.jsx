@@ -21,7 +21,7 @@ const _ArticlesList = styled.div`
 
   h2 {
     font-size: 2.4em;
-    color: #000;
+    color: var(--gold);
     border-bottom: 2px solid var(--gold);
     margin-bottom: 1em;
     font-weight: bold;
@@ -62,7 +62,7 @@ export default class ArticlesList extends PureComponent {
           <a id={`_${d.id}`} className='catAnchor' />
           <h2>{d.categoria}</h2>
           <div className='categoryContent'>
-            {d.articoli.map(a => (<Article key={a.id} data={a} />))}
+            {d.articoli.filter(a => a.immagine[0]).map(a => (<Article key={a.id} data={a} />))}
           </div>
         </div>
       )

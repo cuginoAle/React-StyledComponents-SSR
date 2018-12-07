@@ -55,9 +55,10 @@ _Article.displayName = 'Article'
 
 export default class Article extends PureComponent {
   render () {
+    const image = this.props.data.immagine[0]
     return (
       <_Article className='article' key={this.props.data.id}>
-        <img src={`${this.props.data.immagine[0].file.url}?fit=fill&w=500&h=300`} alt={this.props.data.immagine[0].title} />
+        {image && (<img src={`${image.file.url}?fit=fill&w=500&h=300`} alt={image.title} />)}
         <div className='details'>
           <p className='article-name'>
             {this.props.data.titolo}

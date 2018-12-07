@@ -9,12 +9,12 @@ const _SimpleList = styled.div`
   
   .catWrapper {
     position: relative;
-    margin-bottom: 4em;
+    margin-bottom: 8em;
   }
 
   h2 {
     font-size: 2.4em;
-    color: #000;
+    color: var(--gold);
     border-bottom: 2px solid var(--gold);
     margin-bottom: 1em;
     font-weight: bold;
@@ -30,31 +30,57 @@ const _SimpleList = styled.div`
     width: 100%;
   }  
 
-  .articleLine td {
-    padding: .3em 0;
+  .articleLine {
+    display: flex;
+    padding: .5em 0;
     border-bottom: 1px dotted var(--gold);
-    margin-bottom: .3em;
+    margin-bottom: .5em;
     font-weight: bold;
-    font-size: 1.4em;
     white-space: nowrap;
+    flex-wrap: wrap;
 
-    &.descrizione {
+    .descrizione {
       width: 100%;
-      padding: .3em 1em;
       font-weight: 200;
       white-space: normal;
+      font-size: 1.4em;
+      order:1;
+      margin-top: .5em;
+      opacity: .8;
     }
 
-    &.titolo {
+    .titolo {
       font-weight: bold;
       font-size: 1.6em;
+      max-width: 75%;
       min-width: 30%;
       white-space: normal;
+      margin-right: auto;
+    }
+
+    .prezzo{
+      font-size: 1.4em;
     }
 
     @media (min-width: 1000px){
-      &.titolo{
-        white-space: nowrap;
+      font-size: 1.2em;
+      flex-wrap: nowrap;
+      .descrizione{
+        order: 0;
+        padding: 0 1em;
+        margin-top: 0;
+      }
+      .titolo {
+        margin-right: unset;
+        max-width: 200px;
+        min-width: 30%;
+      }
+    }
+
+    @media (min-width: 1400px){
+      font-size: 1.3em;
+      .titolo {
+        min-width: 20%;
       }
     }
   }
@@ -69,18 +95,16 @@ export default class SimpleList extends PureComponent {
         <div key={d.id} className='catWrapper' >
           <a id={`_${d.id}`} className='catAnchor' />
           <h2>{d.categoria}</h2>
-          <table className='categoryContent'>
-            <tbody>
-              {d.articoli.map(a => (
-                <tr className='articleLine' key={a.id}>
-                  <td className='titolo'>{a.titolo}</td>
-                  <td className='descrizione'>{a.descrizione}</td>
-                  <td className='prezzo'>€ {a.prezzo}</td>
-                </tr>
-              ))
-              }
-            </tbody>
-          </table>
+          <div className='categoryContent'>
+            {d.articoli.map(a => (
+              <div className='articleLine' key={a.id}>
+                <p className='titolo'>{a.titolo}</p>
+                <p className='descrizione'>{a.descrizione}</p>
+                <p className='prezzo'>€ {a.prezzo}</p>
+              </div>
+            ))
+            }
+          </div>
         </div>
       )
     })

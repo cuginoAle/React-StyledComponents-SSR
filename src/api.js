@@ -53,6 +53,7 @@ async function fetchHomeContent () {
           })
 
         // looking for the images
+        art.fields.immagine = art.fields.immagine || []
         art.fields.immagine = art.fields.immagine.map(i => {
           return assets.find(a => {
             return a.sys.id === i.sys.id
