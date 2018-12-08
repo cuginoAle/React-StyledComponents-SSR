@@ -9,7 +9,7 @@
     "linter": "eslint src",
     "bundlesize": "bundlesize",
     "precommit": "standard --fix",
-    "publish": "npm run build && rsync -avzhe ssh ../pizzapi/ alessio@51.75.170.102:/etc/santapi/"
+    "publish": "npm run build && gzip -f < dist/app.bundle.js > dist/app.bundle.js.gz && rsync -avzhe ssh ../pizzapi/ alessio@51.75.170.102:/etc/santapi/"
   },
   "standard": {
     "parser": "babel-eslint"

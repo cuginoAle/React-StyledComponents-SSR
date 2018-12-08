@@ -11,6 +11,13 @@ import routes from './routes.js'
 const app = express()
 const sheet = new ServerStyleSheet()
 
+app.get('/*.js', function (req, res, next) {
+  req.url = `${req.url}.gz`
+
+  res.set('Content-Encoding', 'gzip')
+  next()
+})
+
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 app.get('/*', (req, res) => {
@@ -46,10 +53,10 @@ app.listen(3000)
 function htmlTemplate (reactDom, styleTags, routeData) {
   return `
     <!DOCTYPE html>
-    <html>
+    <html lang='es'>
     <head>
       <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=contain">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Santa Pi</title>
       <link href="assets/base.css" rel="stylesheet" type="text/css"></link>
       <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
