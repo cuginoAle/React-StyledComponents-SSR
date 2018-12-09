@@ -7,6 +7,12 @@ const _Article = styled.div`
   box-shadow      : 0 2px 4px rgba(0,0,0,0.4);
   display         : flex;
   flex-direction  : column;
+  position: relative;
+
+  .anchor {
+    position: absolute;
+    top: -70px;
+  }
   
   img {
     max-width: 100%;
@@ -55,23 +61,25 @@ _Article.displayName = 'Article'
 
 export default class Article extends PureComponent {
   render () {
-    const image = this.props.data.immagine[0]
+    const data = this.props.data
+    const image = data.immagine[0]
     return (
-      <_Article className='article' key={this.props.data.id}>
+      <_Article className='article' key={data.id}>
+        <a id={`pic_${data.id}`} className='anchor' />
         {image && (<img src={`${image.file.url}?fit=fill&w=500&h=300`} alt={image.title} />)}
         <div className='details'>
           <p className='article-name'>
-            {this.props.data.titolo}
+            {data.titolo}
           </p>
           <p className='article-description'>
-            {this.props.data.descrizione}
+            {data.descrizione}
           </p>
           <div className='article-footer'>
             <div className='cat-diet'>
-              {this.props.data.categoriaDietetica.map(cat => <img key={cat.id} src={cat.file.url} alt={cat.title} title={cat.title} />)}
+              {data.categoriaDietetica.map(cat => <img key={cat.id} src={cat.file.url} alt={cat.title} title={cat.title} />)}
             </div>
             <div className='article-price'>
-              <span>€</span> {this.props.data.prezzo}
+              <span>€</span> {data.prezzo}
             </div>
           </div>
         </div>

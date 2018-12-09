@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import styled from 'styled-components'
+import HashLink from './hashLink.jsx'
 
 const _HorizMenu = styled.div`
   position: relative;
@@ -59,7 +60,6 @@ export default class HorizMenu extends PureComponent {
 
   scrollTo (e) {
     e.preventDefault()
-
     document.querySelector(`${e.target.hash}`).scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -77,7 +77,7 @@ export default class HorizMenu extends PureComponent {
     return (
       <_HorizMenu ref className={classes.join(' ')}>
         <div className='scrollable' ref={this.scrollableRef}>
-          {this.props.links.map(l => <a key={l.id} onClick={this.scrollTo} href={`#_${l.id}`}>{l.label}</a>)}
+          {this.props.links.map(l => <HashLink key={l.id} id={`_${l.id}`}>{l.label}</HashLink>)}
         </div>
       </_HorizMenu>
     )
