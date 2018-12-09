@@ -9,7 +9,7 @@
     "linter": "eslint src",
     "bundlesize": "bundlesize",
     "precommit": "standard --fix",
-    "compress" : "gzip -f < dist/app.bundle.js > dist/app.bundle.js.gz",
+    "compress": "gzip -f < dist/app.bundle.js > dist/app.bundle.js.gz",
     "publish": "npm run build && npm run compress && rsync -avzhe ssh ../pizzapi/ alessio@51.75.170.102:/etc/santapi/"
   },
   "standard": {
