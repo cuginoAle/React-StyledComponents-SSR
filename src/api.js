@@ -33,17 +33,32 @@ async function fetchHomeContent () {
       const cat = includes.find(e => {
         return e.sys.id === c.sys.id
       })
+      let articoli = []
 
-      const articoli = cat.fields.articolo.map(a => {
-        // looking for the article
-        const art = includes.find(e => e.sys.id === a.sys.id)
+      if (cat.fields.articolo) {
+        articoli = cat.fields.articolo.map(a => {
+          // looking for the article
+          const art = includes.find(e => e.sys.id === a.sys.id)
 
-        // looking for the catDiet.
-        art.fields.categoriaDietetica = art.fields.categoriaDietetica || []
-        art.fields.categoriaDietetica = art.fields.categoriaDietetica.map(a => includes.find(e => e.sys.id === a.sys.id))
-          .map(e => {
-            return assets.find(cd => {
-              return cd.sys.id === e.fields.icona.sys.id
+          // looking for the catDiet.
+          art.fields.categoriaDietetica = art.fields.categoriaDietetica || []
+          art.fields.categoriaDietetica = art.fields.categoriaDietetica.map(a => includes.find(e => e.sys.id === a.sys.id))
+            .map(e => {
+              return assets.find(cd => {
+                return cd.sys.id === e.fields.icona.sys.id
+              })
+            }).map(a => {
+              return {
+                id: a.sys.id,
+                ...a.fields
+              }
+            })
+
+          // looking for the images
+          art.fields.immagine = art.fields.immagine || []
+          art.fields.immagine = art.fields.immagine.map(i => {
+            return assets.find(a => {
+              return a.sys.id === i.sys.id
             })
           }).map(a => {
             return {
@@ -52,26 +67,14 @@ async function fetchHomeContent () {
             }
           })
 
-        // looking for the images
-        art.fields.immagine = art.fields.immagine || []
-        art.fields.immagine = art.fields.immagine.map(i => {
-          return assets.find(a => {
-            return a.sys.id === i.sys.id
-          })
+          return art
         }).map(a => {
           return {
             id: a.sys.id,
             ...a.fields
           }
         })
-
-        return art
-      }).map(a => {
-        return {
-          id: a.sys.id,
-          ...a.fields
-        }
-      })
+      }
 
       return {
         id: c.sys.id,
