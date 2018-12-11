@@ -21,6 +21,8 @@ app.get('/*.js', function (req, res, next) {
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 app.get('/*', (req, res) => {
+  console.log(req.headers['accept-language'])
+
   const route = routes.filter(route => matchPath(req.url, route)) // filter matching paths
 
   const dataRequirements = route.map(route => route.component) // map to components
