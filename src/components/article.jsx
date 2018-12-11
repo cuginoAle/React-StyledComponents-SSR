@@ -14,7 +14,7 @@ const _Article = styled.div`
     top: -70px;
   }
   
-  img {
+  .productImg {
     max-width: 100%;
     flex-shrink: 0;
     width: 100%;
@@ -48,6 +48,14 @@ const _Article = styled.div`
     align-items: center;
   }
 
+  .cat-diet {
+    display: flex;
+    align-items: center;
+    img {
+      width: 32px;
+    }
+  }
+
   .article-price {
     margin-left: auto;
     color: var(--gold);
@@ -64,11 +72,12 @@ export default class Article extends PureComponent {
   render () {
     const data = this.props.data
     const image = data.immagine[0]
-    const imgSize = this.props.hiRes ? 'w=500&h=300' : 'w=5&h=3'
+    const imgSize = this.props.hiRes ? 'w=500&h=300' : 'w=10&h=6'
+
     return (
       <_Article className='article' key={data.id}>
         <a id={`pic_${data.id}`} className='anchor' />
-        {image && (<img src={`${image.file.url}?fit=fill&${imgSize}`} alt={image.title} />)}
+        {image && this.props.hiRes !== undefined && (<img className='productImg' src={`${image.file.url}?fit=fill&${imgSize}`} alt={image.title} />)}
         <div className='details'>
           <p className='article-name'>
             {data.titolo}

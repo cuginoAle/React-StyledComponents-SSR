@@ -21,7 +21,10 @@ app.get('/*.js', function (req, res, next) {
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 app.get('/*', (req, res) => {
-  console.log(req.headers['accept-language'])
+  // console.log(req.headers['accept-language'])
+
+  // setting the default language here
+  var lang = req.acceptsLanguages('de', 'it', 'es', 'en') || 'en'
 
   const route = routes.filter(route => matchPath(req.url, route)) // filter matching paths
 
@@ -34,6 +37,7 @@ app.get('/*', (req, res) => {
     })) // dispatch data requirement
 
   Promise.all(dataRequirements).then((data) => {
+    data.lang = lang
     const jsx = (
       <StaticRouter context={{ fetched: data }} location={req.url}>
         <StyleSheetManager sheet={sheet.instance}>

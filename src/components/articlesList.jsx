@@ -63,11 +63,20 @@ export default class ArticlesList extends PureComponent {
     }
 
     if (typeof window !== 'undefined') {
-      document.body.addEventListener('scroll', e => {
-        if (!this.articles && props.data.categorie) {
-          this.articles = [].concat.apply([], props.data.categorie.map(c => c.articoli.filter(a => a.immagine[0])))
-        }
+      this.articles = [].concat.apply([], props.data.categorie.map(c => c.articoli.filter(a => a.immagine[0])))
 
+      window.addEventListener('load', () => {
+        const onHiRes = { ...this.state.onHiRes }
+        this.articles.forEach((a) => {
+          onHiRes[a.id] = false
+        })
+
+        this.setState({
+          onHiRes
+        })
+      })
+
+      document.body.addEventListener('scroll', e => {
         const onHiRes = { ...this.state.onHiRes }
         let changed = false
         this.articles.forEach((a) => {
@@ -94,7 +103,7 @@ export default class ArticlesList extends PureComponent {
           <div className='categoryContent'>
             {d.articoli.filter(a => a.immagine[0])
               .map(a => {
-                const res = this.state.onHiRes[a.id] !== undefined
+                const res = this.state.onHiRes[a.id]
                 return <Article hiRes={res} key={a.id} data={a} />
               })}
           </div>

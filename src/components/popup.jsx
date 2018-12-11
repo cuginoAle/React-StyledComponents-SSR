@@ -17,12 +17,6 @@ const _Popup = styled.div`
   &.show{
     display: flex;
   }
-
-  .popupContent {
-    border:1px solid red;
-    padding: 20px;
-  }
-
 `
 _Popup.displayName = 'Popup'
 

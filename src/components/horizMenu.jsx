@@ -27,6 +27,21 @@ const _HorizMenu = styled.div`
     display: flex;
     align-items: center;
     overflow: auto;
+    overflow-x: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;    
+
+    &::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--gold);
+      outline: 1px solid slategrey;
+    }    
   }
 
   a {
