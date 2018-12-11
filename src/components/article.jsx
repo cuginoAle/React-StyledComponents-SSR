@@ -17,6 +17,7 @@ const _Article = styled.div`
   img {
     max-width: 100%;
     flex-shrink: 0;
+    width: 100%;
   }
   .details {
     padding        : 1.4em;
@@ -63,10 +64,11 @@ export default class Article extends PureComponent {
   render () {
     const data = this.props.data
     const image = data.immagine[0]
+    const imgSize = this.props.hiRes ? 'w=500&h=300' : 'w=5&h=3'
     return (
       <_Article className='article' key={data.id}>
         <a id={`pic_${data.id}`} className='anchor' />
-        {image && (<img src={`${image.file.url}?fit=fill&w=500&h=300`} alt={image.title} />)}
+        {image && (<img src={`${image.file.url}?fit=fill&${imgSize}`} alt={image.title} />)}
         <div className='details'>
           <p className='article-name'>
             {data.titolo}

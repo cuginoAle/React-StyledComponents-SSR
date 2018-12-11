@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 import Article from './article.jsx'
+import { isInViewport } from '../helpers.js'
 
 const _ArticlesList = styled.div`
   padding: 50px;
@@ -55,6 +56,35 @@ const _ArticlesList = styled.div`
 _ArticlesList.displayName = 'ArticlesList'
 
 export default class ArticlesList extends PureComponent {
+  constructor (props) {
+    super(props)
+    this.state = {
+      onHiRes: {}
+    }
+
+    if (typeof window !== 'undefined') {
+      document.body.addEventListener('scroll', e => {
+        if (!this.articles && props.data.categorie) {
+          this.articles = [].concat.apply([], props.data.categorie.map(c => c.articoli.filter(a => a.immagine[0])))
+        }
+
+        const onHiRes = { ...this.state.onHiRes }
+        let changed = false
+        this.articles.forEach((a) => {
+          if (isInViewport(document.querySelector(`#pic_${a.id}`), document.body)) {
+            onHiRes[a.id] = true
+            changed = true
+          }
+        })
+
+        if (changed) {
+          this.setState({
+            onHiRes
+          })
+        }
+      })
+    }
+  }
   renderCat (data) {
     return data.map(d => {
       return (
@@ -62,7 +92,11 @@ export default class ArticlesList extends PureComponent {
           <a id={`_${d.id}`} className='catAnchor' />
           <h2>{d.categoria}</h2>
           <div className='categoryContent'>
-            {d.articoli.filter(a => a.immagine[0]).map(a => (<Article key={a.id} data={a} />))}
+            {d.articoli.filter(a => a.immagine[0])
+              .map(a => {
+                const res = this.state.onHiRes[a.id] !== undefined
+                return <Article hiRes={res} key={a.id} data={a} />
+              })}
           </div>
         </div>
       )

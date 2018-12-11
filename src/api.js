@@ -4,22 +4,6 @@ const URL = 'https://cdn.contentful.com'
 const SPACE_ID = 'fafkg42w420e'
 const ACCESS_TOKEN = 'ff8b1553e4717677a6519ddae24e9909afcc5bc6296937d4f68eade3ec48f404'
 
-// async function fetchHomeContent () {
-//   const gallery = await fetchContent('homeGalery')
-//   const art = await fetchContent('articolo', 'order=fields.posizione')
-//   const cat = await fetchContent('categorie', 'order=fields.posizione')
-//   const catDiet = await fetchContent('categoriaDietetica')
-
-//   // console.log(catDiet);
-
-//   return {
-//     gallery,
-//     articoli: art,
-//     categorie: cat,
-//     catDiet
-//   }
-// }
-
 async function fetchHomeContent () {
   const menu = await fetchContent('menu', ['include=3'])
   const includes = menu.includes.Entry
