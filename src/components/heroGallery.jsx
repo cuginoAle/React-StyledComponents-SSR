@@ -6,6 +6,7 @@ const _HeroGallery = styled.div`
 
   div {
     background-size: cover;  
+    background-position: 50%;
     position: absolute;
     left: 0;
     right: 0;
@@ -30,6 +31,33 @@ const _HeroGallery = styled.div`
       opacity:1
     }
   }
+`
+
+const ResBgImg = styled.div`
+  background-image: url("${props => props.url}?w=1000&h=600");
+
+  @media (min-width: 800px){
+    background-image: -webkit-image-set(
+      url("${props => props.url}?w=1000&h=600") 1x,
+      url("${props => props.url}?w=1500&h=1200") 2x
+    );
+    background-image: image-set(
+      url("${props => props.url}?w=1000&h=600") 1x,
+      url("${props => props.url}?w=1500&h=1200") 2x
+    );
+  }
+
+  @media (min-width: 1500px){
+    background-image: -webkit-image-set(
+      url("${props => props.url}?w=1500&h=1200") 1x,
+      url("${props => props.url}?w=3000&h=2400") 2x
+    );
+    background-image: image-set(
+      url("${props => props.url}?w=1500&h=1200") 1x,
+      url("${props => props.url}?w=3000&h=2400") 2x
+    );
+  }  
+
 `
 _HeroGallery.displayName = 'HeroGallery'
 
@@ -79,10 +107,11 @@ export default class HeroGallery extends PureComponent {
   render () {
     const classes = ['HeroGallery', this.keys[this.index % 2]]
     this.props.className && classes.push(this.props.className)
+
     return (
       <_HeroGallery className={classes.join(' ')}>
-        <div className='imageA' style={{ backgroundImage: `url(${this.state.imageA})` }} />
-        <div className='imageB' style={{ backgroundImage: `url(${this.state.imageB})` }} />
+        <ResBgImg className='imageA' url={this.state.imageA} />
+        <ResBgImg className='imageB' url={this.state.imageB} />
       </_HeroGallery>
     )
   }
