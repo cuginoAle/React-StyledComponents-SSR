@@ -34,16 +34,27 @@ const _HeroGallery = styled.div`
 `
 
 const ResBgImg = styled.div`
-  background-image: url("${props => props.url}?w=1000&h=600");
+  background-image: url("${props => props.url}?w=1200&h=800");
+
+  @media (min-width: 400px){
+    background-image: -webkit-image-set(
+      url("${props => props.url}?w=800&h=400") 1x,
+      url("${props => props.url}?w=1200&h=800") 2x
+    );
+    background-image: image-set(
+      url("${props => props.url}?w=800&h=400") 1x,
+      url("${props => props.url}?w=1200&h=800") 2x
+    );
+  }
 
   @media (min-width: 800px){
     background-image: -webkit-image-set(
-      url("${props => props.url}?w=1000&h=600") 1x,
-      url("${props => props.url}?w=1500&h=1200") 2x
+      url("${props => props.url}?w=1200&h=800") 1x,
+      url("${props => props.url}?w=1600&h=1200") 2x
     );
     background-image: image-set(
-      url("${props => props.url}?w=1000&h=600") 1x,
-      url("${props => props.url}?w=1500&h=1200") 2x
+      url("${props => props.url}?w=1200&h=800") 1x,
+      url("${props => props.url}?w=1600&h=1200") 2x
     );
   }
 
