@@ -26,8 +26,7 @@ async function fetchHomeContent (lang) {
           const art = includes.find(e => e.sys.id === a.sys.id)
 
           // looking for the catDiet.
-          art.fields.categoriaDietetica = art.fields.categoriaDietetica || []
-          art.fields.categoriaDietetica = art.fields.categoriaDietetica.map(a => includes.find(e => e.sys.id === a.sys.id))
+          art.fields.categoriaDietetica = (art.fields.categoriaDietetica || []).map(a => includes.find(e => e.sys.id === a.sys.id))
             .map(e => {
               return assets.find(cd => {
                 return cd.sys.id === e.fields.icona.sys.id
@@ -40,8 +39,7 @@ async function fetchHomeContent (lang) {
             })
 
           // looking for the images
-          art.fields.immagine = art.fields.immagine || []
-          art.fields.immagine = art.fields.immagine.map(i => {
+          art.fields.immagine = (art.fields.immagine || []).map(i => {
             return assets.find(a => {
               return a.sys.id === i.sys.id
             })
@@ -51,6 +49,19 @@ async function fetchHomeContent (lang) {
               ...a.fields
             }
           })
+
+          // looking for the prices
+          art.fields.multiPrezzo = (art.fields.multiPrezzo || []).map(p => {
+            return includes.find(a => {
+              return a.sys.id === p.sys.id
+            })
+          })
+            .map(a => {
+              return {
+                value: a.fields.prezzo,
+                descrizione: a.fields.descrizione
+              }
+            })
 
           return art
         }).map(a => {
@@ -85,6 +96,7 @@ async function fetchHomeContent (lang) {
 
 async function fetchContent (contentType, options = []) {
   const str = `${URL}/spaces/${SPACE_ID}/environments/master/entries?content_type=${contentType}&access_token=${ACCESS_TOKEN}&${options.join('&')}`
+  // console.log(str);
 
   return fetch(str)
     .then(res => { return res.json() })

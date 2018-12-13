@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import styled from 'styled-components'
+import MultiPrice from './multiPrice.jsx'
 
 const _Article = styled.div`
   align-items     : center;
@@ -89,9 +90,7 @@ export default class Article extends PureComponent {
             <div className='cat-diet'>
               {data.categoriaDietetica.map(cat => <img key={cat.id} src={cat.file.url} alt={cat.title} title={cat.title} />)}
             </div>
-            <div className='article-price'>
-              <span>€</span> {data.prezzo}
-            </div>
+            <MultiPrice priceList={data.multiPrezzo} className='article-price' />
           </div>
         </div>
       </_Article>
