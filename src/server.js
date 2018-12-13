@@ -7,6 +7,7 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter, matchPath } from 'react-router-dom'
 import AppWrapper from './app.jsx'
 import routes from './routes.js'
+import fs from 'fs'
 
 const app = express()
 const sheet = new ServerStyleSheet()
@@ -19,19 +20,34 @@ app.get('/*.js', function (req, res, next) {
   next()
 })
 
+app.get('/sitemap.xml', function (req, res, next) {
+  res.set('Content-Type', 'text/xml')
+  res.writeHead(200, { 'Content-Type': 'text/xml' })
+  res.end(fs.readFileSync(path.resolve(__dirname, '../sitemap.xml')))
+})
+
+app.get('/robots.txt', function (req, res, next) {
+  res.set('Content-Type', 'text/xml')
+  res.writeHead(200, { 'Content-Type': 'text/xml' })
+  const robot = `
+  User-Agent: *
+  Disallow: 
+  Sitemap: https://www.santapi.es/sitemap.xml`
+  res.end(robot)
+})
+
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 app.get('/*', (req, res) => {
   // console.log(req.headers['accept-language'])
 
-  // setting the default language here
-  var lang = req.acceptsLanguages('de', 'it', 'es', 'en') || 'en'
-
+  // setting the default language here: url param || browser pref || en
+  var lang = req.params[0] || req.acceptsLanguages('de', 'it', 'es', 'en') || 'en'
   const route = routes.filter(route => matchPath(req.url, route)) // filter matching paths
 
   const dataRequirements = route.map(route => route.component) // map to components
     .filter(comp => comp.dataFetch) // check if components have data requirement
-    .map(comp => comp.dataFetch().then(data => {
+    .map(comp => comp.dataFetch(lang).then(data => {
       return {
         [comp.name]: data
       }
@@ -51,20 +67,25 @@ app.get('/*', (req, res) => {
     const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
 
     res.writeHead(200, { 'Content-Type': 'text/html' })
-    res.end(htmlTemplate(reactDom, styleTags, data))
+    res.end(htmlTemplate(reactDom, styleTags, data, lang))
   })
 })
 
 app.listen(3000)
 
-function htmlTemplate (reactDom, styleTags, routeData) {
+function htmlTemplate (reactDom, styleTags, routeData, lang) {
   return `
     <!DOCTYPE html>
-    <html lang='es'>
+    <html lang='${lang}'>
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Santa Pi</title>
+
+      <meta name="description" content=" Santa Pi - italian restaurant in Sineu (Mallorca)" />
+      <meta name="keywords" content="Santa Pi, pizza, pizzeria, restaurant, ristorante, italian, italiano, napoletana, Sineu, Mallorca, cucina tipica" />
+      <meta name="google-site-verification" content="APEmdx-7C-wy8WkQCDIX1jebHb6ajaKgcan0h92lI10" />
+
       <link href="assets/base.css" rel="stylesheet" type="text/css"></link>
       <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
       <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">

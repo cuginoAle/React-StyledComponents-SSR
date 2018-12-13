@@ -1,7 +1,5 @@
 import Home from './pages/Home.jsx'
-// import About from './pages/About.jsx'
-// import Contact from './pages/Contact.jsx'
-// import P404 from './pages/p404.jsx'
+import P404 from './pages/p404.jsx'
 
 export default [
   {
@@ -10,20 +8,27 @@ export default [
     exact: true
   },
   {
-    path: '/:lang',
-    component: Home
+    path: '/it',
+    component: Home,
+    exact: true
+  },
+  {
+    path: '/en',
+    component: Home,
+    exact: true
+  },
+  {
+    path: '/de',
+    component: Home,
+    exact: true
+  },
+  {
+    path: '/es',
+    component: Home,
+    exact: true
+  },
+  {
+    path: '*',
+    component: P404
   }
-  // {
-  //   path: '/about',
-  //   component: About,
-  //   exact: true
-  // },
-  // {
-  //   path: '/contact',
-  //   component: Contact,
-  //   exact: true
-  // },
-  // {
-  //   component: P404
-  // }
 ]

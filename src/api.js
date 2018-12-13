@@ -4,8 +4,9 @@ const URL = 'https://cdn.contentful.com'
 const SPACE_ID = 'fafkg42w420e'
 const ACCESS_TOKEN = 'ff8b1553e4717677a6519ddae24e9909afcc5bc6296937d4f68eade3ec48f404'
 
-async function fetchHomeContent () {
-  const menu = await fetchContent('menu', ['include=3'])
+async function fetchHomeContent (lang) {
+  const menu = await fetchContent('menu', ['include=3', `locale=${lang}`])
+
   const includes = menu.includes.Entry
   const assets = menu.includes.Asset
 
