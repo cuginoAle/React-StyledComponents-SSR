@@ -51,11 +51,12 @@ async function fetchHomeContent (lang) {
           })
 
           // looking for the prices
-          art.fields.multiPrezzo = (art.fields.multiPrezzo || []).map(p => {
-            return includes.find(a => {
-              return a.sys.id === p.sys.id
+          art.fields.multiPrezzo = (art.fields.multiPrezzo || [])
+            .map(p => {
+              return includes.find(a => {
+                return a.sys.id === p.sys.id
+              })
             })
-          })
             .map(a => {
               return {
                 value: a.fields.prezzo,
