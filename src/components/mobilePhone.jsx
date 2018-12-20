@@ -2,22 +2,28 @@ import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 
 const _MobilePhone = styled.a`
-  color: currentColor;
-  border-radius: 99px;
-  padding: .3em .5em;
-  background-color: green;
-  color: white;
-  display: inline-flex;
-  align-items: center;
+  align-items     : center;
+  border-radius   : 99px;
+  color           : var(--gold);
+  display         : inline-flex;
+  padding         : 0 .5em;
+  border          : 1px solid var(--gold);
+  background-color: black;
 
+  span {
+    color: var(--gold);
+  }
   svg{
-    fill: currentColor;
-    display: inline-block;
-    margin-right: .5em;
-    width: 1.2em;
-    height: 1.2em;
+    
+    display         : inline-block;
+    fill            : currentColor;
+    height          : 2em;
+    margin-right    : .5em;
+    padding         : .2em;
+    width           : 2em;
   }
 `
+
 _MobilePhone.displayName = 'MobilePhone'
 
 export default class MobilePhone extends PureComponent {
