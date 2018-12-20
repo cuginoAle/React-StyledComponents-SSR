@@ -45,7 +45,12 @@ const LangsWrapper = styled.div`
     margin          : .3em 0;
     padding         : .5em 1em;
     text-align      : center;
-  }`
+  }
+
+  span.language {
+    opacity: .4;
+  }
+`
 _LanguagePicker.displayName = 'LanguagePicker'
 
 export default class LanguagePicker extends PureComponent {
@@ -74,9 +79,9 @@ export default class LanguagePicker extends PureComponent {
     const keys = Object.keys(this.props.langs)
     return (
       keys.map(k => {
-        return (
-          <a href={`/${k}`} className='language' onClick={e => { e.stopPropagation() }} key={k}>{this.props.langs[k]}</a>
-        )
+        return this.props.langs[k].disabled
+          ? (<span className='language' key={k}>{this.props.langs[k].label}</span>)
+          : (<a href={`/${k}`} className='language' onClick={e => { e.stopPropagation() }} key={k}>{this.props.langs[k].label}</a>)
       })
     )
   }

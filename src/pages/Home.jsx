@@ -177,10 +177,10 @@ class Home extends Component {
     this.showLanguage = true
 
     this.langs = {
-      'es': 'Español',
-      'en': 'English',
-      'de': 'Deutsche',
-      'it': 'Italiano'
+      'es': { label: 'Español' },
+      'en': { label: 'English' },
+      'de': { label: 'Deutsche', disabled: true },
+      'it': { label: 'Italiano', disabled: true }
     }
 
     this.state = {
