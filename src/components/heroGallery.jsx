@@ -106,10 +106,10 @@ export default class HeroGallery extends PureComponent {
       })
 
       setTimeout(() => {
-        this.index = this.getNextIndex()
+        const index = this.getNextIndex()
         const fOn = this.state.focusOn === 'imageA' ? 'imageB' : 'imageA'
         this.setState({
-          [fOn]: this.props.images[this.index].file.url
+          [fOn]: this.props.images[index].file.url
         })
       }, 1050)
 
