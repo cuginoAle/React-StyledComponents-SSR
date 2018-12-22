@@ -87,16 +87,7 @@ export default class HeroGallery extends PureComponent {
     }
 
     if (typeof document !== 'undefined') {
-      this.img = document.createElement('img')
-      this.img.onload = this.showNext.bind(this)
-    }
-
-    this.checkImageLoad()
-  }
-
-  checkImageLoad () {
-    if (typeof document !== 'undefined') {
-      this.img.src = this.props.images[this.index].file.url
+      this.showNext()
     }
   }
 
@@ -107,16 +98,27 @@ export default class HeroGallery extends PureComponent {
   showNext () {
     setTimeout(() => {
       this.index = this.getNextIndex()
+      const fOn = this.state.focusOn === 'imageA' ? 'imageB' : 'imageA'
+
       this.setState({
-        [this.keys[this.index % 2]]: this.props.images[this.index].file.url,
-        focusOn: this.keys[this.index % 2]
+        focusOn: fOn,
+        [fOn]: this.props.images[this.index].file.url
       })
-      this.checkImageLoad()
-    }, 4000)
+
+      setTimeout(() => {
+        this.index = this.getNextIndex()
+        const fOn = this.state.focusOn === 'imageA' ? 'imageB' : 'imageA'
+        this.setState({
+          [fOn]: this.props.images[this.index].file.url
+        })
+      }, 1050)
+
+      this.showNext()
+    }, 3000)
   }
 
   render () {
-    const classes = ['HeroGallery', this.keys[this.index % 2]]
+    const classes = ['HeroGallery', this.state.focusOn]
     this.props.className && classes.push(this.props.className)
 
     return (
