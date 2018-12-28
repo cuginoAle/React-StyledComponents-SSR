@@ -96,12 +96,16 @@ export default class ArticlesList extends PureComponent {
   }
   renderCat (data) {
     return data.map(d => {
+      const art = d.articoli.filter(a => a.immagine[0])
+
+      if (art.length === 0) return null
+
       return (
         <div key={d.id} className='catWrapper' >
           <a id={`_${d.id}`} className='catAnchor' />
           <h2>{d.categoria}</h2>
           <div className='categoryContent'>
-            {d.articoli.filter(a => a.immagine[0])
+            {art
               .map(a => {
                 const res = this.state.onHiRes[a.id]
                 return <Article hiRes={res} key={a.id} data={a} />
