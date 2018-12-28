@@ -117,7 +117,7 @@ const Wrapper = styled(Layout)`
   }
   .hero {
     border-top: 1px solid var(--gold);
-    height: 60vh;
+    height: 90vh;
 
     @media screen and (orientation: portrait){
       height: 40vh;
@@ -263,7 +263,7 @@ class Home extends Component {
           <p>Come visit us!</p>
         </SectionBar>
 
-        <iframe title="google maps" className='gmap' src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3072.308169053147!2d3.0079210152457185!3d39.64277857946253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1297c98f75bbf6f1%3A0x673dfd54604023ab!2zU2FudGFww60!5e0!3m2!1sen!2suk!4v1544037998967' allowFullScreen />
+        <iframe title='google maps' className='gmap' src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3072.308169053147!2d3.0079210152457185!3d39.64277857946253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1297c98f75bbf6f1%3A0x673dfd54604023ab!2zU2FudGFww60!5e0!3m2!1sen!2suk!4v1544037998967' allowFullScreen />
 
         <MobilePhone className='numFooter' num='+34 64 666 4313' />
       </Wrapper>

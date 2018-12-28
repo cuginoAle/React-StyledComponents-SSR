@@ -77,6 +77,7 @@ export default class HeroGallery extends PureComponent {
     super(props)
 
     this.index = 0
+    this.carouselTimeout = 4000
 
     this.keys = ['imageA', 'imageB']
 
@@ -114,7 +115,7 @@ export default class HeroGallery extends PureComponent {
       }, 1050)
 
       this.showNext()
-    }, 3000)
+    }, this.carouselTimeout)
   }
 
   render () {
